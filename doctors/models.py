@@ -12,7 +12,7 @@ class DoctorProfile(models.Model):
             raise ValidationError("User is not a doctor.")
 
     def __str__(self):
-        return self.user.username
+        return f"{self.name} - {self.specialization.name}"
 
 class Specialization(models.Model):
     id = models.AutoField(primary_key=True)

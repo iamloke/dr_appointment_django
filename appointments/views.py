@@ -6,7 +6,7 @@ from rest_framework.response import *
 from appointments.serializers import *
 from appointments.models import *
 
-# Schedule CRUD
+# Appointment CRUD
 class AddAppointment(APIView):
     def post(self, request):
         serializer = AppointmentSerializer(data=request.data)
@@ -36,3 +36,14 @@ class DeleteAppointment(APIView):
             return Response({"message":"Appointment removed successfully"}, status=status.HTTP_204_NO_CONTENT)
         except Appointment.DoesNotExist:
             return Response({"message":"Appointment not found"},status=status.HTTP_404_NOT_FOUND)
+
+# WOA
+def optimize_schedule_view(request):
+    doctors = DoctorProfile.objects.all()
+    schedules = Schedule.objects.all()
+
+    optimizer = AppointmentOptimization()
+
+    optimizer.objective_function(doctors, schedules)
+
+    return render(request, 'appointments/optimized_schedule.html')

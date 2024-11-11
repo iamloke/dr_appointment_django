@@ -9,8 +9,8 @@ class Schedule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
-
+        return f"{self.doctor.name} - {self.shift.name} - {self.shift.start_time} to {self.shift.end_time} on {self.date}"
+        
 class Shift(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -23,4 +23,4 @@ class Shift(models.Model):
             raise ValidationError("Start time must be before end time.")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.start_time} - {self.end_time}"

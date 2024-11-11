@@ -6,7 +6,6 @@ from schedules.models import Schedule
 class Appointment(models.Model):
     id = models.AutoField(primary_key=True)
     patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     appointment_time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -16,4 +15,4 @@ class Appointment(models.Model):
             raise ValidationError('Appointment time must be between 9:00 AM and 5:00 PM')
 
     def __str__(self):
-        return f"{self.patient.user.username} - {self.doctor.user.username} - {self.schedule.date}"
+        return f"Appointment for {self.patient.name} with {self.schedule.doctor.name} on {self.schedule.date} at {self.appointment_time}"
